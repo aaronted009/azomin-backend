@@ -1,12 +1,7 @@
-from ..database import Base
-from sqlalchemy import Column, Integer, String
+from sqlmodel import Field, SQLModel
 
 
-class Student(Base):
-    """`Student` model class."""
-
-    __tablename__ = "students"
-
-    id = Column(Integer, primary_key=True)
-    firstname = Column(String)
-    lastname = Column(String)
+class Student(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    firstname: str = Field(index=True)
+    lastname: str = Field(index=True)
