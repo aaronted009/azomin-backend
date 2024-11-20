@@ -1,5 +1,6 @@
+from sqlmodel import Field, Date, Relationship
 from .person import Person
-from sqlmodel import Field, Date
+from .course import Course
 
 
 class Teacher(Person, table=True):
@@ -7,3 +8,4 @@ class Teacher(Person, table=True):
     hireDate: Date | None = Field()
     qualification: str = Field(index=True)
     salary: float = Field()
+    courses: list["Course"] = Relationship(back_populates="teacher")
