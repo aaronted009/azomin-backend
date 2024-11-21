@@ -7,5 +7,5 @@ class Exam(SQLModel, table=True):
     title: str = Field(index=True)
     examDate: date | None = Field()
     trimester: int = Field()
-    classroom_id: int | None = Field(default=None, foreign_key="classroom.id")
-    course_id: int | None = Field(default=None, foreign_key="course.id")
+    classroom_id: int = Field(foreign_key="classroom.id")
+    course_id: int = Field(foreign_key="course.id")
