@@ -32,7 +32,7 @@ class Teacher(Person, table=True):
     id: int = Field(primary_key=True)
     hireDate: date | None = Field()
     qualification: str = Field(index=True)
-    salary: float = Field()
+    salary: Optional[float] = Field()
     courses: Optional[list["Course"]] = Relationship(back_populates="teacher")
 
 
