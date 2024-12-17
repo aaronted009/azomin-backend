@@ -33,7 +33,7 @@ class Teacher(Person, table=True):
     hireDate: date | None = Field()
     qualification: str = Field(index=True)
     salary: float = Field()
-    courses: list["Course"] = Relationship(back_populates="teacher")
+    courses: Optional[list["Course"]] = Relationship(back_populates="teacher")
 
 
 class ClassRoom(SQLModel, table=True):
