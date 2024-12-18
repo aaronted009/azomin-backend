@@ -1,4 +1,3 @@
-from __future__ import annotations
 from datetime import date
 from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional
@@ -17,7 +16,7 @@ class Person(SQLModel):
 class Student(Person, table=True):
     id: int = Field(primary_key=True)
     classroom_id: int = Field(foreign_key="classroom.id")
-    classroom: ClassRoom = Relationship(back_populates="students")
+    classroom: "ClassRoom" = Relationship(back_populates="students")
     student_tutors: list["StudentTutor"] = Relationship(back_populates="student")
     exam_results: list["ExamResult"] = Relationship(back_populates="student")
 
@@ -25,7 +24,7 @@ class Student(Person, table=True):
 class StudentTutor(Person, table=True):
     id: int = Field(primary_key=True)
     student_id: int = Field(foreign_key="student.id")
-    student: Student = Relationship(back_populates="student_tutors")
+    student: "Student" = Relationship(back_populates="student_tutors")
 
 
 class Teacher(Person, table=True):
@@ -41,7 +40,7 @@ class ClassRoom(SQLModel, table=True):
     className: str = Field()
     numberOfStudents: int = Field()
     students: list["Student"] = Relationship(back_populates="classroom")
-    fees: Fee = Relationship(back_populates="classroom")
+    fees: "Fee" = Relationship(back_populates="classroom")
 
 
 class Course(SQLModel, table=True):
@@ -50,7 +49,7 @@ class Course(SQLModel, table=True):
     description: str = Field(index=True)
     coefficient: int = Field()
     teacher_id: int = Field(foreign_key="teacher.id")
-    teacher: Teacher = Relationship(back_populates="courses")
+    teacher: "Teacher" = Relationship(back_populates="courses")
 
 
 class Exam(SQLModel, table=True):
@@ -60,20 +59,20 @@ class Exam(SQLModel, table=True):
     trimester: int = Field()
     classroom_id: int = Field(foreign_key="classroom.id")
     course_id: int = Field(foreign_key="course.id")
-    exam_results: Optional[ExamResult] = Relationship(back_populates="exam")
+    exam_results: list["ExamResult"] = Relationship(back_populates="exam")
 
 
 class ExamResult(SQLModel, table=True):
     id: int = Field(primary_key=True)
     score: int = Field()
     exam_id: int = Field(foreign_key="exam.id")
-    exam: Exam = Relationship(back_populates="exam_results")
+    exam: "Exam" = Relationship(back_populates="exam_results")
     student_id: int = Field(foreign_key="student.id")
-    student: Student = Relationship(back_populates="exam_results")
+    student: "Student" = Relationship(back_populates="exam_results")
 
 
 class Fee(SQLModel, table=True):
     id: int = Field(primary_key=True)
     amount: float = Field()
     classroom_id: int = Field(foreign_key="classroom.id")
-    classroom: ClassRoom = Relationship(back_populates="fees")
+    classroom: "ClassRoom" = Relationship(back_populates="fees")
