@@ -10,7 +10,7 @@ from .models import (
 )
 from fastapi import APIRouter, FastAPI
 from fastapi import HTTPException
-from .database import create_db_and_tables
+from .database import create_db_and_tables, SessionDep
 
 app = FastAPI()
 
@@ -261,8 +261,10 @@ async def delete_student_tutor(student_tutor_id: int):
 
 # CRUD operations for the Teacher model
 @router.post("/teachers/", response_model=Teacher)
-async def create_teacher(teacher: Teacher):
-    await teacher.save()
+async def create_teacher(teacher: Teacher, session: SessionDep):
+    session.add(teacher)
+    session.commit()
+    session.close()
     return teacher
 
 
