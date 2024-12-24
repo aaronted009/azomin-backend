@@ -30,8 +30,10 @@ router = APIRouter()
 
 # CRUD operations for the Course model
 @router.post("/courses/", response_model=Course)
-async def create_course(course: Course):
-    await course.save()
+async def create_course(course: Course, session: SessionDep):
+    session.add(course)
+    session.commit()
+    session.close()
     return course
 
 
@@ -63,8 +65,10 @@ async def delete_course(course_id: int):
 
 # CRUD operations for the Student model
 @router.post("/students/", response_model=Student)
-async def create_student(student: Student):
-    await student.save()
+async def create_student(student: Student, session: SessionDep):
+    session.add(student)
+    session.commit()
+    session.close()
     return student
 
 
@@ -96,8 +100,10 @@ async def delete_student(student_id: int):
 
 # CRUD operations for the Exam model
 @router.post("/exams/", response_model=Exam)
-async def create_exam(exam: Exam):
-    await exam.save()
+async def create_exam(exam: Exam, session: SessionDep):
+    session.add(exam)
+    session.commit()
+    session.close()
     return exam
 
 
@@ -129,8 +135,10 @@ async def delete_exam(exam_id: int):
 
 # CRUD operations for the ExamResult model
 @router.post("/exam_results/", response_model=ExamResult)
-async def create_exam_result(exam_result: ExamResult):
-    await exam_result.save()
+async def create_exam_result(exam_result: ExamResult, session: SessionDep):
+    session.add(exam_result)
+    session.commit()
+    session.close()
     return exam_result
 
 
@@ -162,8 +170,10 @@ async def delete_exam_result(exam_result_id: int):
 
 # CRUD operations for the Fee model
 @router.post("/fees/", response_model=Fee)
-async def create_fee(fee: Fee):
-    await fee.save()
+async def create_fee(fee: Fee, session: SessionDep):
+    session.add(fee)
+    session.commit()
+    session.close()
     return fee
 
 
@@ -195,8 +205,10 @@ async def delete_fee(fee_id: int):
 
 # CRUD operations for the ClassRoom model
 @router.post("/classrooms/", response_model=ClassRoom)
-async def create_classroom(classroom: ClassRoom):
-    await classroom.save()
+async def create_classroom(classroom: ClassRoom, session: SessionDep):
+    session.add(classroom)
+    session.commit()
+    session.close()
     return classroom
 
 
@@ -228,8 +240,10 @@ async def delete_classroom(classroom_id: int):
 
 # CRUD operations for the StudentTutor model
 @router.post("/student_tutors/", response_model=StudentTutor)
-async def create_student_tutor(student_tutor: StudentTutor):
-    await student_tutor.save()
+async def create_student_tutor(student_tutor: StudentTutor, session: SessionDep):
+    session.add(student_tutor)
+    session.commit()
+    session.close()
     return student_tutor
 
 
