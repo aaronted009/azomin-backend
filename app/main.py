@@ -11,6 +11,7 @@ from .models import (
 from fastapi import APIRouter, FastAPI
 from fastapi import HTTPException
 from .database import create_db_and_tables, SessionDep
+from sqlmodel import select
 
 app = FastAPI()
 
@@ -29,6 +30,13 @@ router = APIRouter()
 
 
 # CRUD operations for the Course model
+@router.get("/courses/", response_model=list[Course])
+async def read_courses(session: SessionDep):
+    read_courses = select(Course)
+    courses = session.exec(read_courses)
+    return courses
+
+
 @router.post("/courses/", response_model=Course)
 async def create_course(course: Course, session: SessionDep):
     session.add(course)
@@ -64,6 +72,13 @@ async def delete_course(course_id: int):
 
 
 # CRUD operations for the Student model
+@router.get("/students/", response_model=list[Student])
+async def read_students(session: SessionDep):
+    read_students = select(Student)
+    students = session.exec(read_students)
+    return students
+
+
 @router.post("/students/", response_model=Student)
 async def create_student(student: Student, session: SessionDep):
     session.add(student)
@@ -99,6 +114,13 @@ async def delete_student(student_id: int):
 
 
 # CRUD operations for the Exam model
+@router.get("/exams/", response_model=list[Exam])
+async def read_exams(session: SessionDep):
+    read_exams = select(Exam)
+    exams = session.exec(read_exams)
+    return exams
+
+
 @router.post("/exams/", response_model=Exam)
 async def create_exam(exam: Exam, session: SessionDep):
     session.add(exam)
@@ -134,6 +156,13 @@ async def delete_exam(exam_id: int):
 
 
 # CRUD operations for the ExamResult model
+@router.get("/exam_results/", response_model=list[ExamResult])
+async def read_exam_results(session: SessionDep):
+    read_exam_results = select(ExamResult)
+    exam_results = session.exec(read_exam_results)
+    return exam_results
+
+
 @router.post("/exam_results/", response_model=ExamResult)
 async def create_exam_result(exam_result: ExamResult, session: SessionDep):
     session.add(exam_result)
@@ -169,6 +198,13 @@ async def delete_exam_result(exam_result_id: int):
 
 
 # CRUD operations for the Fee model
+@router.get("/fees/", response_model=list[Fee])
+async def read_fees(session: SessionDep):
+    read_fees = select(Fee)
+    fees = session.exec(read_fees)
+    return fees
+
+
 @router.post("/fees/", response_model=Fee)
 async def create_fee(fee: Fee, session: SessionDep):
     session.add(fee)
@@ -204,6 +240,13 @@ async def delete_fee(fee_id: int):
 
 
 # CRUD operations for the ClassRoom model
+@router.get("/classrooms/", response_model=list[ClassRoom])
+async def read_classrooms(session: SessionDep):
+    read_classrooms = select(ClassRoom)
+    classrooms = session.exec(read_classrooms)
+    return classrooms
+
+
 @router.post("/classrooms/", response_model=ClassRoom)
 async def create_classroom(classroom: ClassRoom, session: SessionDep):
     session.add(classroom)
@@ -239,6 +282,13 @@ async def delete_classroom(classroom_id: int):
 
 
 # CRUD operations for the StudentTutor model
+@router.get("/student_tutors/", response_model=list[StudentTutor])
+async def read_student_tutors(session: SessionDep):
+    read_student_tutors = select(StudentTutor)
+    student_tutors = session.exec(read_student_tutors)
+    return student_tutors
+
+
 @router.post("/student_tutors/", response_model=StudentTutor)
 async def create_student_tutor(student_tutor: StudentTutor, session: SessionDep):
     session.add(student_tutor)
@@ -274,6 +324,13 @@ async def delete_student_tutor(student_tutor_id: int):
 
 
 # CRUD operations for the Teacher model
+@router.get("/teachers/", response_model=list[Teacher])
+async def read_teachers(session: SessionDep):
+    read_teachers = select(Teacher)
+    teachers = session.exec(read_teachers)
+    return teachers
+
+
 @router.post("/teachers/", response_model=Teacher)
 async def create_teacher(teacher: Teacher, session: SessionDep):
     session.add(teacher)
