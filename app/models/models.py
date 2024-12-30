@@ -38,7 +38,7 @@ class Teacher(Person, table=True):
 class ClassRoom(SQLModel, table=True):
     id: int = Field(primary_key=True)
     className: str = Field()
-    numberOfStudents: int = Field()
+    numberOfStudents: Optional[int] = Field()
     students: list["Student"] = Relationship(back_populates="classroom")
     fees: "Fee" = Relationship(back_populates="classroom")
 
