@@ -33,6 +33,7 @@ class Teacher(Person, table=True):
     qualification: str = Field(index=True)
     salary: Optional[float] = Field()
     courses: Optional[list["Course"]] = Relationship(back_populates="teacher")
+    password: str = Field()
 
 
 class ClassRoom(SQLModel, table=True):
