@@ -2,7 +2,7 @@ from logging.config import fileConfig
 
 from sqlalchemy import create_engine
 from sqlalchemy import pool
-
+from sqlmodel import SQLModel
 from alembic import context
 from dotenv import load_dotenv
 import os
@@ -32,7 +32,7 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from app.models.models import ClassRoom, Course, Exam, Student, StudentTutor, Teacher, Fee, ExamResult
-target_metadata = [ClassRoom.metadata, Course.metadata, Exam.metadata, Student.metadata, StudentTutor.metadata, Teacher.metadata, Fee.metadata, ExamResult.metadata]
+target_metadata = SQLModel.metadata
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
