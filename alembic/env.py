@@ -5,7 +5,6 @@ from sqlalchemy import pool
 
 from alembic import context
 from dotenv import load_dotenv
-from sqlmodel import SQLModel
 import os
 
 load_dotenv()
@@ -32,8 +31,8 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from app.models.models import *
-target_metadata = SQLModel.metadata
+from app.models.models import ClassRoom, Course, Exam, Student, StudentTutor, Teacher, Fee, ExamResult
+target_metadata = [ClassRoom.metadata, Course.metadata, Exam.metadata, Student.metadata, StudentTutor.metadata, Teacher.metadata, Fee.metadata, ExamResult.metadata]
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
