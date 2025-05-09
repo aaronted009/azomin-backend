@@ -9,9 +9,8 @@ class Person(SQLModel):
     dateOfBirth: date | None = Field()
     gender: str = Field(index=True)
     address: str = Field()
-    phoneNumber: str = Field()
-    email: str = Field()
-
+    phoneNumber: str = Field(unique=True)
+    email: str = Field(index=True, unique=True)
 
 class Student(Person, table=True):
     id: int = Field(primary_key=True)
