@@ -333,9 +333,30 @@ async def read_teachers(session: SessionDep):
 
 @router.post("/teachers/", response_model=Teacher)
 async def create_teacher(teacher: Teacher, session: SessionDep):
-    session.add(teacher)
-    session.commit()
-    session.close()
+    try:
+        session.add(teacher)
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        print(f"Error occurred: {str(e)}")
+        error_message = str(e).lower()
+        if "unique constraint" in error_message:
+            raise HTTPException(
+            status_code=400,
+            detail="A teacher with the same unique identifier already exists."
+            )
+        elif "foreign key constraint" in error_message:
+            raise HTTPException(
+            status_code=400,
+            detail="Invalid foreign key reference. Please check related data."
+            )
+        else:
+            raise HTTPException(
+            status_code=500,
+            detail=f"An unexpected error occurred: {error_message}"
+            )
+    finally:
+        session.close()
     return teacher
 
 
