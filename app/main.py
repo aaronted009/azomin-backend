@@ -12,9 +12,11 @@ from fastapi import APIRouter, FastAPI
 from fastapi import HTTPException
 from .database import create_db_and_tables, SessionDep
 from sqlmodel import select
+from .exceptions import custom_exception_handler, handle_database_error
 
 app = FastAPI()
 
+app.add_exception_handler(HTTPException, custom_exception_handler)
 
 @app.on_event("startup")
 def on_startup():
@@ -338,23 +340,7 @@ async def create_teacher(teacher: Teacher, session: SessionDep):
         session.commit()
     except Exception as e:
         session.rollback()
-        print(f"Error occurred: {str(e)}")
-        error_message = str(e).lower()
-        if "unique constraint" in error_message:
-            raise HTTPException(
-            status_code=400,
-            detail="A teacher with the same unique identifier already exists."
-            )
-        elif "foreign key constraint" in error_message:
-            raise HTTPException(
-            status_code=400,
-            detail="Invalid foreign key reference. Please check related data."
-            )
-        else:
-            raise HTTPException(
-            status_code=500,
-            detail=f"An unexpected error occurred: {error_message}"
-            )
+        raise handle_database_error(str(e))
     finally:
         session.close()
     return teacher
